@@ -1,7 +1,33 @@
-h1 {
-    font-family: helvetica;
-    text-decoration: underline;
-  }
+/* Set default styles for canvas and buttons */
 canvas {
-      border: 1px solid #000;
+	border: 1px solid #000;
+	width: 100%;
+	max-width: 500px;
+	height: 50vh;
+	max-height: 500px;
+}
+
+button {
+	display: inline-block;
+	margin: 10px;
+	padding: 10px;
+	font-size: 16px;
+}
+
+/* Adjust styles for smaller screens */
+@media (max-width: 500px) {
+	canvas {
+		height: 40vh;
+		max-height: 400px;
+	}
+	
+	button {
+		margin: 5px;
+		padding:
+    3px;
+    font-size: 14px;
+    }
+  #clear-btn {
+    margin-left: 0;
   }
+}

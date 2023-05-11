@@ -14,11 +14,10 @@ var whiteboard = {
 		this.canvas.addEventListener("mousedown", this.startDraw.bind(this));
 		this.canvas.addEventListener("mousemove", this.draw.bind(this));
 		this.canvas.addEventListener("mouseup", this.endDraw.bind(this));
-		this.canvas.addEventListener("touchstart", handleStart);
-		this.canvas.addEventListener("touchend", handleEnd);
-		this.canvas.addEventListener("touchcancel", handleCancel);
-		this.canvas.addEventListener("touchmove", handleMove);
-		
+		this.canvas.addEventListener("touchstart", this.startDraw.bind(this));
+		this.canvas.addEventListener("touchend", this.endDraw.bind(this));
+		this.canvas.addEventListener("touchcancel", this.handleCeanvasTouchCancel.bind(this));
+		this.canvas.addEventListener("touchmove", this.draw.bind(this));
 		
 		// Attach event listener to the clear button
 		document.getElementById("clear-btn").addEventListener("click", this.clear.bind(this));
@@ -33,6 +32,7 @@ var whiteboard = {
 		this.ctx.beginPath();
 		
 		// Move the starting point to the current mouse position
+		var touch = event.touches[0];
 		this.ctx.moveTo(event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop);
 	},
 	
@@ -45,6 +45,13 @@ var whiteboard = {
 		
 		// Draw a line to the current mouse position
 		this.ctx.lineTo(event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop);
+
+		// Prevent scrolling on the canvas
+		event.preventDefault();
+		
+		// Draw a line to the current touch position
+		var touch = event.touches[0];
+		this.ctx.lineTo(touch.clientX - this.canvas.offsetLeft, touch.clientY - this.canvas.offsetTop);
 		
 		// Set the stroke style and width
 		this.ctx.strokeStyle = "#000";
