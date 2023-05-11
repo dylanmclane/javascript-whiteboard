@@ -14,6 +14,11 @@ var whiteboard = {
 		this.canvas.addEventListener("mousedown", this.startDraw.bind(this));
 		this.canvas.addEventListener("mousemove", this.draw.bind(this));
 		this.canvas.addEventListener("mouseup", this.endDraw.bind(this));
+		this.canvas.addEventListener("touchstart", handleStart);
+		this.canvas.addEventListener("touchend", handleEnd);
+		this.canvas.addEventListener("touchcancel", handleCancel);
+		this.canvas.addEventListener("touchmove", handleMove);
+		
 		
 		// Attach event listener to the clear button
 		document.getElementById("clear-btn").addEventListener("click", this.clear.bind(this));
