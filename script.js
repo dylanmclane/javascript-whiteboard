@@ -14,6 +14,8 @@ var whiteboard = {
 		this.canvas.addEventListener("mousedown", this.startDraw.bind(this));
 		this.canvas.addEventListener("mousemove", this.draw.bind(this));
 		this.canvas.addEventListener("mouseup", this.endDraw.bind(this));
+
+		// Add event listeners for touch events
 		this.canvas.addEventListener("touchstart", this.startDraw.bind(this));
 		this.canvas.addEventListener("touchmove", this.draw.bind(this));
 		this.canvas.addEventListener("touchend", this.endDraw.bind(this));
@@ -101,8 +103,17 @@ var whiteboard = {
 	
 	// Save the image
 	save: function() {
-		// Open the image in a new window
-		window.open(this.canvas.toDataURL("image/png"));
+		// Create a link element
+	var link = document.createElement("a");
+	
+	// Set the link's href attribute to the image data URL
+	link.href = this.canvas.toDataURL("image/png");
+	
+	// Set the link's download attribute to the filename
+	link.download = "whiteboard.png";
+	
+	// Click the link to download the image
+	link.click();
 	}
 };
 
