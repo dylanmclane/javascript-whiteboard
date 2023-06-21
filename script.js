@@ -19,6 +19,7 @@ var whiteboard = {
 		this.canvas.addEventListener("touchstart", this.startDraw.bind(this));
 		this.canvas.addEventListener("touchmove", this.draw.bind(this));
 		this.canvas.addEventListener("touchend", this.endDraw.bind(this));
+
 		
 		// Attach event listener to the clear button
 		document.getElementById("clear-btn").addEventListener("click", this.clear.bind(this));
@@ -38,6 +39,9 @@ var whiteboard = {
 		
 		this.canvas.width = width;
 		this.canvas.height = height;
+
+		this.ctx.fillStyle = "white";
+		this.ctx.fillRect(0, 0, canvas.width, canvas.height);
 		
 		var buttons = document.querySelectorAll("button");
 		for (var i = 0; i < buttons.length; i++) {
@@ -50,8 +54,13 @@ var whiteboard = {
 	// Start drawing
 	startDraw: function(event) {
 		// Begin a new path on the canvas
+
 		this.ctx.beginPath();
 		
+		
+
+		this.ctx.lineTo(event.clientX - this.canvas.offsetLeft, event.clientY - this.canvas.offsetTop);
+
 		// Move the starting point to the current position
 		var x, y;
 		if (event.type === "mousedown") {
@@ -69,6 +78,10 @@ var whiteboard = {
 	draw: function(event) {
 		// Prevent scrolling on the canvas
 		event.preventDefault();
+
+		if (event.buttons !== 1) {
+			return;
+		}
 		
 		// Draw a line to the current position
 		var x, y;
@@ -94,10 +107,11 @@ var whiteboard = {
 	endDraw: function(event) {
 		// End the path
 		this.ctx.closePath();
+		this.drawing = false;	
 		},
+
 	// Clear the canvas
 	clear: function() {
-		// Clear the canvas
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 	
